@@ -5,5 +5,6 @@
     * .
 1. Rozrysować IMS i PIM wg Enterprise patterns
 1. Rozrysować IMS i PIM wg perspektyw being, behaving, becoming
+1. Download -> shouldUpdate / shouldRemove, serwis aplikacyjny na mockach może? 
 1. .
 1. .

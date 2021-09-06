@@ -30,15 +30,17 @@
    * _Conditional proposition of inclusion_ - ... (7.18 - 7.19)
 1. _Product relationships_ - bardziej stabilne relacje między _Product types_ mogą być modelowane w ten sposób
    * _upgradableTo_, _substitutetBy_, _replacedBy_, _complementedBy_, _compatibleWith_, _incompatibleWith_ - 
-1. _up-selling_ -> _upgradableTo_, _cross-selling_ -> produkt, który chesz kupić często idzie w parze z innymi, które
-   w danej konfiguracji można kupić w niższej cenie
+1. _up-selling_ -> _upgradableTo_, _cross-selling_ -> produkt, który chesz kupić często idzie w parze z innymi, które w
+   danej konfiguracji można kupić w niższej cenie
 1. _Price_:
    * _Product type_ może mieć wiele różnych cen (np. od wielu różnych sprzedawców/dostawców)
-   * _Price_ ma powiązany _Rule set_, który określa warunki jej dostępności (jeśli chcesz price x, musisz spełnić warunek y)
-   * _Prices_ mogą mieć opcjonalną ważność (_validFrom_, _validTo_), które mogą zostać użyte przez _Rule set_ do decyzji,
-     czy dana cena jest dostępna i może zostać użyta do stworzenia historii cen _Product Type_
-   * _Product instance_ ma przypisaną _agreed Price_ ze zbioru _possible Prices_ dla _Prdocut type_ lub _applied Arbitrary Price*_
-   * . 7.22.1
+   * _Price_ ma powiązany _Rule set_, który określa warunki jej dostępności (jeśli chcesz price x, musisz spełnić
+     warunek y)
+   * _Prices_ mogą mieć opcjonalną ważność (_validFrom_, _validTo_), które mogą zostać użyte przez _Rule set_ do
+     decyzji, czy dana ceśna jest dostępna i może zostać użyta do stworzenia historii cen _Product Type_
+   * _Product instance_ ma przypisaną _agreed Price_ ze zbioru _possible Prices_ dla _Prdocut type_ lub _applied
+     Arbitrary Price*_
+   * _Prices_ są ustalane wg _Rules_, ale czasem wyjątkowe sytuacje potrzebują _RuleOverride_
    * . ....
-1. ..
-1. ..
+1. _Measured product type_ i _Measured product instance_
+1. _Services_ 

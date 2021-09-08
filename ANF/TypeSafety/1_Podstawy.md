@@ -8,10 +8,11 @@
 * Nie wyłapie wszystkiego
 * Type-checkery w JS: Typescript, Hegel, Purescript, Flow
     * Typescript jest najpowszechniej używany i jest duże wsparcie społeczności
-    
+
 * Ważniejsze niż sama technologia jest to jak się jej używa
-  
+
 ## Zalety
+
 * Type checker sprawdza nasz kod - kompilator sprawdza nasze błędy
 * Odnajdujemy błędy wcześniej - w trakcie developmentu, nie w runtime
 * Redukcja odpowiedzialności za błędy w kodzie
@@ -20,6 +21,7 @@
 * Łatwiejsze refaktory
 
 ## Ograniczenia
+
 * Typescript nie umie sprawdzić co jest w odpowiedzi z REST API - bo to jest robione dopiero w runtime
 * Warunki wyścigu
 * Niektóre operacja JS jak koercja `{} + ''`, `100/0 -> infinity`
@@ -27,6 +29,7 @@
 * Typescript trzeba w miarę regularnie podnosić - zmiany między wersjami potrafią być inwazyjne
 
 ## Dodatkowo
+
 * Playground: https://www.typescriptlang.org/play
 
     

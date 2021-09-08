@@ -15,11 +15,10 @@
 
 1. `type Result = {[key: string]: number}` - tak można otypować hash array
 1. Typescript nie umie wywnioskować parametrów funkcji, czasem umie typ wynikowy
-   - np. jak konkatenujemy coś w wewntrz funkcji to z natury jsa
-   to zawsze będzie string (string jako joker xD)
-     
+    - np. jak konkatenujemy coś w wewntrz funkcji to z natury jsa to zawsze będzie string (string jako joker xD)
+
 1. Problem z otypowaniem tego co jest zwracane asynchronicznie np. z API
-   - Typescript nie wie co się dzieje w runtime aplikacji bo go już tam dawno nie ma
-   - Więc nam nie rzuci błędem jeśli coś jest nie tak 
-   - axios może pomóc to sparametryzować, natywny fetch tego nie umie
+    - Typescript nie wie co się dzieje w runtime aplikacji bo go już tam dawno nie ma
+    - Więc nam nie rzuci błędem jeśli coś jest nie tak
+    - axios może pomóc to sparametryzować, natywny fetch tego nie umie
    

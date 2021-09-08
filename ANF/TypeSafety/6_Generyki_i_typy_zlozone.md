@@ -1,13 +1,16 @@
 # Generyki i typy złożone
 
 ## Generyki
+
 * typy parametryzujący inne typy
+
 ``` 
 type Storage<T> = {
     data: T[],
     add(t: T): void
 }
 ```
+
 * _generic constraints_
   ``` 
     class AnotherStorage<T extends {id: string}> {
@@ -22,6 +25,7 @@ type Storage<T> = {
 ## Typy mapowane
 
 * budujemy nowe typy na podstawie innych
+
 ``` 
 export interface Transfer {
   id: string;
@@ -45,11 +49,14 @@ const new: T2 = {...}
 ```
 
 ## Typy warunkowe
+
 ``` 
 type X = T1 extends T2 ? A : B;
 ```
+
 * _naked/distributive types_
 * `infer`
 
 ## Typy warunkowe mapowane
+
 * ???

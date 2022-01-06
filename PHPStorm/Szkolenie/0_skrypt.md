@@ -67,4 +67,3 @@ Jak zacząć sprawniej korzystać z PHP Storma czyli szybciej pisać i testować
 ## Dodatkowo
 1. Udostępnić _cheetsheet_
 2. Skróty klawiszowe ze zrzutów ekranu ponad paskiem play xD
-3. .

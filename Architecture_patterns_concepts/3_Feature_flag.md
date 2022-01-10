@@ -1,4 +1,4 @@
-[# Feature toggles (feature flags)
+# Feature toggles (feature flags)
 
 Source: https://martinfowler.com/articles/feature-toggles.html
 

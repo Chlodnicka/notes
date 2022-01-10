@@ -1,4 +1,4 @@
-# Feature toggles (feature flags)
+[# Feature toggles (feature flags)
 
 Source: https://martinfowler.com/articles/feature-toggles.html
 
@@ -164,9 +164,39 @@ function generateInvoiceEmail() {
 Dodatkowy obiekt `FeatureDecisions` działa jako zbiór wszystkich reguł - jeśli one się zmienią, modyfikujemy tylko to jedno miejsce. 
 A nasz mechanizm wysyłający maile nawet nie wie, jak ta decyzja została podjęta.
 
-### _Inversion og decision_
+### _Inversion of decision_
 
-...
+1. _Inversion of control_ - _dependency injection_
 
 ### _Avoiding conditionals_
 
+1. Co do zasady `if'y` są spoko przy prostych, krótko żyjących _feature toggle_ - 
+gdy mamy skomplikowane reguły i będzie żył dłużej niż sprint czy dwa to warto rozważyć _strategy pattern_
+
+## Konfiguracja
+
+1. Są w zasadzie dwa sposoby, w jaki można wpływać na decyzję _feature flag_ w runtime - może się zmieniać konfiguracja (_on/off switch_) jak w przypadku _ops_ 
+i decyzja zmieni się tylko wtedy, gdy ktoś zmieni konfigurację
+albo w przypadku _permission_ czy _experiment_ podejmują decyzję na podstawie jakichś warunków wejścia np. jaki użytkownik robi request
+2. Obydwa podejścia mogą się łączyć - _experiment toggles_ mogą podejmować dynamiczne decyzje na podstawie dosyć spójnej, niezbyt często się zmieniającej konfiguracji
+3. Jeśli tylko jest to możliwe łatwiej żyje się ze statyczną konfiguracją (przez zmiany w kodzie i ponowne wdrożenia) - wszystko jest w jednym miejscu,
+zazwyczaj jest najszybsze, musi przejść przez CD, nie trzeba puszczać testów dla obydwu wariantów (flaga włączona i wyłączona) bo nie zmieni swojej wartości po wdrożeniu
+
+### Podejścia do konfiguracji
+
+1. zahardkodowana konfiguracja - na komentarzach czy ifach
+2. sparametryzowana - np na podstawie zmiennych środowiskowych - można wpływać na _feature flag_ bez redeploy'u
+3. przechowywana w pliku - podobnie jak ze zmiennymi środowiskowymi
+4. przechowywana w bazie - jeśli chcemy dać komuś możliwość operowania tymi flagami
+5. rozproszona - [Zookeeper](https://zookeeper.apache.org/) czy [Consul](https://www.consul.io/), przydatne jak masz wiele node'ów i trzeba nimi zarządzać i np. dawać znać wszystkim na raz, że flaga się zmieniła
+
+### Nadpisywanie konfiguracji
+
+1. Często jest tak, że czasem naszą defaultową konfiguracje _feature flag_ chcemy nadpisać np. dla danego środowiska / requestu.
+Czasem wystarczy dodatkowa flaga w pliku konfiguracyjnym/zmienna środowiskowa 
+2. A czasem wolimy załatwić sprawę trochę inaczej i zmienić zachowanie _feature flag_ per request poprzez dodanie do niego specjalnego _cookie_, parametru w _query_ czy w _body_, _hedear_
+3. Minusem jest to, że wprowadzamy ryzyko, że ciekawscy użytkownicy mogą modyfikować stan _feature flag_ jak im pasuje - można to próbować zabezpieczyć np. wykorzystując szyfrowane tokeny
+
+## Jak pracować z systemem z wieloma flagami?
+
+...

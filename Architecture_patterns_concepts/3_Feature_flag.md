@@ -1,6 +1,6 @@
 # Feature toggles (feature flags)
 
-Source: https://martinfowler.com/articles/feature-toggles.html
+Source: [https://martinfowler.com/articles/feature-toggles.html](https://martinfowler.com/articles/feature-toggles.html)
 
 ## O co chodzi
 
@@ -199,4 +199,10 @@ Czasem wystarczy dodatkowa flaga w pliku konfiguracyjnym/zmienna środowiskowa
 
 ## Jak pracować z systemem z wieloma flagami?
 
-...
+1. Jest przydatne, ale dodaje złożoności
+2. Dobrze jest udostępniać innym ludziom (testerom, operatorom) informację jakiej wersji używają (np. nowego czy starego algorytmu wyliczania ceny)
+3. Całkiem niezłym pomysłem jest udostępnianie plików konfiguracyjnych _toggli_ w formatach type YAML, gdzie można dopisać informacje przydatne dla biznesu/testerów np. nie lakoniczną nazwę flagi ale też dodać po prostu pole `description:`
+4. Należy pamiętać że typy _feature toggli_ różnią się między sobą - to co kiedyś było _release_ może kidyś przerodzić się w _experimental_ a na końcu w _ops_, który wyłączamy w Black Friday - w zależności od tego, jak traktujemy daną flagę trochę inaczej powinnyśmy to implementować np. w przypadku _ops_ może nie powinno być to przełączane w kodzie przez developera czy konfigurowalne przez zmienne środowiskowe tylko przesunięte do bazy danych?
+5. Flagi wprowadzają złożoność przy testowaniu - nie zawsze trzeba testować każdą możliwą wariację, ale na pewno więcej niż gdyby ich nie było w ogóle
+6. Toggle pointy najlepiej umieszczać "na brzegach" funkcjonalności np. w przypadku nowego modułu na stronie wrzucić to w ifa widoku (twiga itd) - jak najdalej od logiki i bebechów samej funkcjonalności. Nie jest to reguła - czasem się nie da - jak flaga dotyczy podmiany polityki czysto biznesowej to trzeba ją wrzucić np. w domenę i tyle.
+7. Trzeba monitorować nasze flagi i pozbywać się tych, które już nie są potrzebne np. ustalić ile moze być ich jednocześnie, ustalać daty ważności po których testy zaczynają płonąć itp.

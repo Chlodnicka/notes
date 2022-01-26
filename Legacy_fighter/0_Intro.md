@@ -43,3 +43,6 @@ https://github.com/legacyfighter/cabs-java
 ## Event storming w legacy
 
 ...
+
+1. big bicture - _as is_
+2. process level - _to be_

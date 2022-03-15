@@ -65,5 +65,52 @@ W legacy zachowania tego typu zazwyczaj odbywają sięw serwisach, nie w obiekci
 
 1. Czy dane, które chcę separować są związane ze sobą jakąś regułą? 
 2. Trzymanie bliskich sobie danych i reguł razem
-3. Wynoś prawdziwych problematycznych sąsiadów, nie siebie
+3. Wynoś prawdziwych problematycznych sąsiadów, nie siebie 
+(jak przeszkadza Ci sąsiad i blokuje dostęp do windy to przeprowadzasz się czy próbujesz coś innego zrobić? 
+czy to rozwiąże twój problem - tak, czy innych sąsiadów - nie) - Separacja często zmieniającej się danej
 4. _lost update_ - zgubiony update - trzeba zastanowić się jak działa orm
+   * blokowanie optymistyczne vs pesymistyczne
+   * inkrementacje są spoko czasem w sql
+   * _dirty checking_
+5. Niezależne funkcje biznesowe powinny być niezależne technicznie
+6. O decyzji technicznej przy refaktorze można myśleć jak o dźwigni - poświęcamy mało w miniej istotnej częsci systemu, zyskujemy w innej, istotniejszej
+7. Deadlocki -> ponawianie też generuje ruch na bazie (roundtripy bazodanowe -> może join?)
+
+### Pytania pomocnicze
+1. Co się dzieje z danymi? 
+2. W jaki sposób są one wykorzystywane? 
+3. W jakim celu zostały wyświetlone? 
+4. Czy na ich podstawie podejmowane są ważne decyzje biznesowe?
+
+Jeśli jakieś dane są ze sobą związane silną regułą, należy zapewnić ich spójność, zarówno podczas zapisu i odczytu. 
+
+### Strategia migracji danych
+
+1. Np. przerwa serwisowa: wyłączenie systemu -> migracja -> testy -> włączenie systemu
+2. Zero downtime - aplikacja musi działać cały czas -> skrypt migracyjny w tle 
+(zmiana danych podczas migracji, nałożenie się w czasie i niezapisanie np. akcji uzytkownika)
+jeśli jest to problem -> to robimy to krokowo, zapisujemy w dwóch miejscach jednocześne -
+możemy wtedy np. popełnić błąd i wycofać zmiany bez większego wpływu na cały system 
+3. Migracji danych poświęcono całe książki xD
+
+#### Nie naprawiaj wszystkiego na raz
+
+1. Czy klient tego kodu nie nauczył się już żyć z tym błędem i nie wprowadzono procesów akcji kompensujących? - system informatyczny to część większego systemu biznesowaego
+2. Zapytaj eksperta domenowego / biznesu co o tym myśli - decyzja o naprawie logiki powinna być świadoma
+3. Odseparuj poprawkę logiki od refkatoryzacji (choćby commitem)
+
+### Pytania
+
+1. Czy użytkownicy zauważają okresy o większej / mniejszej dostępności funkcji systemu
+2. Czy w logach można zauwazyć błędy potencjalnie związane z zapisami i  z blokowaniem optymistycznym
+3. W jaki sposób projektpway/refaktoropwany obiekt będzie używany? Ile różnych akcji biznesowych będzie go zmieniać? Jak często się będą wykonywać?
+4. Czy probelm dotyka wszsystkich czy wybranego klienta (klienta / działu)
+
+### Kroki
+
+1. Zidentyfikuj problematyczną daną
+2. Odseparuj daną
+3. Określ sposób migracji danych pomiędzy
+4. Zastanów się nad potrzebą stosowania blokowania optymistycznego zapisu
+
+#### Pisz testy na poziomie obserwowalnych zachowań i pokrywaj logikę biznesową  i jej reguły

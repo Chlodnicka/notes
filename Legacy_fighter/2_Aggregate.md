@@ -114,3 +114,69 @@ możemy wtedy np. popełnić błąd i wycofać zmiany bez większego wpływu na 
 4. Zastanów się nad potrzebą stosowania blokowania optymistycznego zapisu
 
 #### Pisz testy na poziomie obserwowalnych zachowań i pokrywaj logikę biznesową  i jej reguły
+
+## Pomieszanie logiki domenowej i procesowej
+
+1. Często wtedy nie jesteśmy w stanie napisania testu jednostkowego
+2. Próba napisania testu wyższego poziomu wymaga odcięcia wielu zależności i zaślepienia ich
+3. Koszt i trudność napisania testu może powodować, że ten test nigdy nie powstanie 
+4. Jak w takim przypadku pokryć obserwowalne zachowanie testem?
+
+### Rodzaje logiki
+
+Heurystyki:
+1. Logika walidacyjna - potrzebuje jakich danych wejściowych, opisuje waruniki ich poprawności, 
+nie wymaga ani nie sprawdza dodatkowych danych z systemu (np bazy danych), czy aktualnego stanu systemu
+2. Logika biznesowa - opisuje spójną zmianę stanu pod pewnymi warunkami, 
+pewne zmiany muszą być przeprowadzone od razu, pewne mogą zostać odroczone,
+wymanage jest zablokowanie pewnych danych, w celu niknięcia utraty spójności
+3. Logika procesowa (proces biznesowy - często jeśli coś to coś), często rozciągnięta w czasie (godzin, dni),
+opisuje przebieg długotrwałego procesu biznesowego np. kolejno realizowane konsekwencje pewnych decyzji,
+zawiera sformułowania w postaci "jeśli, to wtedy, następnie", 
+można ją podzielić na szereg mniejszych kroków i wykonywać etapami, jakie działania kształtują ten proces 
+(np. operator coś klika, ktoś coś zatwierdza, musi minąć jakiś czas od zgłoszenia itd)
+
+### Jak rozwiązać problem?
+
+1. Trzymaj dane i zachownia bliko siebie
+2. Nadawaj intencje kaskadom zmian danych
+3. Przenoś logikę do metod biznesowych
+
+* Wprowadzając nowy koncept odroczmy nazwanie
+* to podjęcie decyzji o sposobie rozwiązania reklamacji musi być wykonane spójnie
+* kolejne działania w systemie to konsekwencje tych decyzji, mogą zostać odroczone w czasie
+* _siły rozpychające nasz design_ - drivery architektoniczne
+
+Kod odpowiada jednocześnie za podjęcie decyzji, odłożenie stanu i propagowanie/przetwarzanie jej konsekwencji
+
+### Wyznaczenie granicy obiektu, częśc danych do parametrów
+1. Jaka odpowiedzialność ma dany obiekt, jakich danych w tym celu potrzebujemy?
+Czy dane są dodatkowe? Czy to dane istotne, wpływające na spójność zmiany? - odczytując dane bez blokowania godzimy się na roszczelnienie spójności
+2. Zestaw blokowanych danyc hpowinien być podyktowany przede wszystkim kontrolą spójności
+3. Można uniknąć blokowania zb byt wielu danyc hjednocześnie np. jeśli yżycie nieaktualnych danych nie jest problemem lub dopuszcza się ich zmianęw trakcie, w innych procesach
+
+
+1. Logikę domenową warto wrzucić w deydkowany obiekt, który odpowiada za spójną zmianę stanu
+2. Logikę procesową warto trzymać w wyższej warstwie, np. w  serwisie / handlerze / innym dedykowanym obiekcie (gdy jest rozbudowana / zmienna)
+
+### Symptomy
+
+1. Nagromazenie instrukcji warunkowych o różnym przeznaczeniu
+2. Trudność implementacji testu logiki biznesowej, potrzeba tworzenia wielu zaślepek dla zewnętrznych komponentów
+
+### Pomocne pytania
+
+1. Które instrukcje są powiązane z podejmowaniem decyzji, które z obsługą konsekwencji?
+2. Czy dopuszczalne jest opóźnienie wykoania fragmentów kodu? Których?
+3. Jaki jest charakter zaślepek?
+
+Załóż że żadne oprogramowanie nie istnieje, a wszystkie czynności są wykonywane ręcznie:
+1. Kto w ogranizacji zajmuje sięwykonaniem testowanej czynności?
+2. Jakie decyzje podejmuje taka osoba, a jakie działania zleca innym pracownikom?
+3. Jakich informacji taka osoba potrzebuje w celu podjęcia decyzji? Jakie jest źródło pochodzenia tych danych?
+4. Jak te informacje są utrwalane i dlaczego?
+5. Jakie konsekwencje powoduje wykorzystanie przez taką osobę nieaktualnych danych?
+6. W jaki spośób taka osoba współpracuje z innymi pracownikami? Jak się z nimi komunikuje?
+7. Czy wynik wykonania tych zleconych rzeczy ma wpływ na finalną decyzję? Czy decyzja już zapadła i to, że ktoś czegoś nie zrobił nie ma na nią wpłuwu 
+
+Czasem trafiamy na jednostkę koordynującą działania innych części organizacji zamiast na jednostkę podejmującą decyzję. 

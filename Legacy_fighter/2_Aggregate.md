@@ -180,3 +180,18 @@ Załóż że żadne oprogramowanie nie istnieje, a wszystkie czynności są wyko
 7. Czy wynik wykonania tych zleconych rzeczy ma wpływ na finalną decyzję? Czy decyzja już zapadła i to, że ktoś czegoś nie zrobił nie ma na nią wpłuwu 
 
 Czasem trafiamy na jednostkę koordynującą działania innych części organizacji zamiast na jednostkę podejmującą decyzję. 
+
+## Problem dużej zmeinności reguł biznesowych
+
+1. Mnogość reprezentacji - koncept może być reprezentowany na wiele róznych sposobów
+2. NIespójność to efekt braku enkapsulacji i wyrzuca
+3. Zmienność reprezentacji można ukryć za stablinym interfejsem
+4. Reguły mogą być rozpięte na wiele obiektów różnego typu
+5. Jednocześnie musimy obsługiwać różne reprezentacje (np. algorytmów wyliczania ceny, naliczania / wygaszania punktów lojalnościowych)
+
+* Uproszczenie poprzez pozorne skomplikowanie 
+* Cwiczenia wizualizacyjne - szkice reprezentujące przypadki - szukanie kolejnych przypadków w celu znalezienia nadrzędnej reguły 
+na razie mamy dwa różne sposoby wygasania punktów lojalnościowych, ale w sumie moze za jakiś czas to się zmieni
+możemy poćwiczyc wymyślanie różnych nowych przypadków, żeby odkryć jakąś "ogólną, nadrzędną" zasadę rządzącą tymi przypadkami
+* algorytm ukryty za interfesjem przekazywany do metody (strategia liczenia ceny)
+* zmiany addytywne są łatwiejsze do wprowadzania

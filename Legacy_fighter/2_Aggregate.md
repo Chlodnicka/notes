@@ -195,3 +195,9 @@ na razie mamy dwa różne sposoby wygasania punktów lojalnościowych, ale w sum
 możemy poćwiczyc wymyślanie różnych nowych przypadków, żeby odkryć jakąś "ogólną, nadrzędną" zasadę rządzącą tymi przypadkami
 * algorytm ukryty za interfesjem przekazywany do metody (strategia liczenia ceny)
 * zmiany addytywne są łatwiejsze do wprowadzania
+
+* jedna metoda: sprawdza reguły, dostrojenia decyzji i wykonania decyzji (czasem te bloki są oddzielone, czasem pomieszane i trzeba je najpierw oddzielić)
+* częściej zmienia się logika dostrojenia decyzji niż samo wykonanie 
+* separacja kodu zmienego od stabilnego -> szukaj stabilnej części procedura, który mówi o tym "jak wykonuje się decyzji", ta stabilna część będzie dostarajana zmiennymi politykami:
+* np. wybierz odpowiedni do warunków wstępnych algorytm sortowania, przekaż kontretny algorytm sortowania jako parametr do metody, wywołaj sortowanie w metodzie i jej wynik przekaż do kodu, ktory wykona decyzję (np. zapisze odpowiednie dane, zwróci output, wyśle eventy)
+* polityki i strategie - dziel i rządź w warunkach programowania obiektowego

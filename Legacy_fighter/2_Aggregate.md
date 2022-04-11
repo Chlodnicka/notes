@@ -196,8 +196,34 @@ możemy poćwiczyc wymyślanie różnych nowych przypadków, żeby odkryć jaką
 * algorytm ukryty za interfesjem przekazywany do metody (strategia liczenia ceny)
 * zmiany addytywne są łatwiejsze do wprowadzania
 
-# Polityki i strategie - dziel i rządź w warunkach programowania obiektowego
+### Polityki i strategie - dziel i rządź w warunkach programowania obiektowego
 * jedna metoda: sprawdza reguły, dostrojenia decyzji i wykonania decyzji (czasem te bloki są oddzielone, czasem pomieszane i trzeba je najpierw oddzielić)
 * częściej zmienia się logika dostrojenia decyzji niż samo wykonanie 
 * separacja kodu zmienego od stabilnego -> szukaj stabilnej części procedura, który mówi o tym "jak wykonuje się decyzji", ta stabilna część będzie dostarajana zmiennymi politykami:
 * np. wybierz odpowiedni do warunków wstępnych algorytm sortowania, przekaż kontretny algorytm sortowania jako parametr do metody, wywołaj sortowanie w metodzie i jej wynik przekaż do kodu, ktory wykona decyzję (np. zapisze odpowiednie dane, zwróci output, wyśle eventy)
+
+* Czy można zauważyć okresy o większej/mniejszej dostępności funkcji systemu
+* Czy metoda ma wiele parametrów, które się często zmieniają?
+* Czy istanieje blok, który nie zmienia stanu tylko np. wybiera jakiś algorytm i można go odseparować od bloku, który ten stan zmienia?
+* Cwiczenia lingwistycznej: "możemy niekorzystnie dla klienta (jak) usuwać punkty (co) kiedy zalega z opłatami (kiedy)"
+* Jak - model komparatorów? Co? AwardsAccount.remove Kiedy? Wybór komparatora za pomocą określonych warunków
+
+## Charakterystyka agregatu
+* Potrwafi podejmować decyzje i przeprowadzić spójną zmianę pewnego zestawu danych
+* Przechowuje w swoim wnętrzu graf innych obiektów, ktrych nie ujawnia na zewnątrz
+* Posiada jasno określoną tożsamość
+* Jego sposób działania może zostać doprecyzowany politykami
+* Jednostka spójnej zmiany - konkretny obiekt odpowiada za przeprowadzenie zmiany 
+* Może zostać testowany jednosktkowo
+* Jego działanie może być doprecyzowane wstrzykiwanym kodem polityk
+* Zwiększa czytelność kodu
+
+## Zasady projektowania agregatów
+
+1. Modeluj prawdziwe niezmienniki w ramach granicy spójności - agregat zawsze powonien znajdować się w prawidłowym stanie 
+2. Staraj sięprojektować nieduże agregaty, nie umieszczaj w nich zbędnych danych
+3. Odwołuj się do innych agregatów z użyciem ich tożsamości - nie wsadzaj agregatu w agregat
+4. Wykorzystuj model Eventual Consistency - nie każda zmiana w systemie musi nastąpić od razu, 
+może coś może stać się kilka sekund później - ilość sztuk po zamówieniu może musi zapisać się od razu, ale sama cena może przeliczyc się 2 sekundy później
+
+* Czasem agregaty muszą ze sobą współpracować

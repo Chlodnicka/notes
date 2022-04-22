@@ -1,5 +1,7 @@
 # GIT
 
+https://learngitbranching.js.org/?locale=en
+
 1. Projekt w Gicie to lista commitów (każdy ze wskazaniem na swojego poprzednika).
 Można o nim myśleć jako o acyklicznym grafie skierowanym. 
 2. Każdy commit (poza pierwszym) ma wskaźnik do swojego rodzica

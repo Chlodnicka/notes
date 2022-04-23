@@ -178,5 +178,15 @@ odpalić request, odpali się okienko Debuggera i leci z koksem (zielona strzał
     ![](./resources/Screenshot 2022-04-21 at 21.36.40.png)
 
 
+## Jeśli docker skonfigurowany poza projektem 
+
+1. Trzeba doinstalować tam Xdebuga 
+2. Skonfigurować częśc rzeczy w PhpStormie jak poniżej (reszta tak samo)
+
+![](./resources/Screenshot 2022-04-23 at 10.47.40.png)
+![](./resources/Screenshot 2022-04-23 at 10.48.26.png)
+![](./resources/Screenshot 2022-04-23 at 10.48.58.png)
+![](./resources/Screenshot 2022-04-23 at 10.49.17.png)
+
 
 

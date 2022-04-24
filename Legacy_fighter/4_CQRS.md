@@ -42,4 +42,30 @@
 
 * Niektóre dane w obiektach staną się niepotrzebne. Dzięki usunięciu zyskujemy czytelność
 
-## Parallel Models
+## Parallel Models - modele równoległe 
+
+1. W złożonym systemie, który przechodzi refaktoryzację oraz jednocześnie jest rozwijany, utrzymanie dwóch równoległych modeli
+to często jedyna bezpieczna droga
+2. Zalety: bezpieczeństwo,, możliwość odwrotu do starego modelu, dowolność nowego modelu, testowalność nowego modelu poprzez porównianie ze starym, stopniowe wdrażanie
+3. Wady: rozwijanie obu modeli, jeśli trwa długo, więcej kodu, migracja danych (efekt brzydkiego kaczątka - przez pewien czas stan obecny wygląda gorzej niż poprzednio "noc jest najciemniejsza przed świtem"), trudność połączneia
+4. Czasem dobrze jest użyć Proxy (stary kod, już podłączony, wywołuje nowy kod) - a czasem jest problem nawet z tym, bo brakuje enkapsulacji, model jest rozmyty
+5. Usuwalność kodu jest ważnym driverem architektonicznym - chowaj szczegóły implemntacyjne za klarownym api, jeśli implementacja jest brzydka to trudno, ale jeśli jest ukryta za stabilnym interfejsem to lepiej niż piękne, ale wymieszane koncepty
+6. Feature flagi do starej/nowej implementacji ;) I można nagle włączać nowy model per klient, mamy testy A/B, dzien/noc, wnioskowanie na podstawie ostatniego wywołania
+7. Test to weryfikacja naszych założeń - często założeniem jest: ma działać jak działało do tej pory - wtedy weryfikacją założeń (testem) jest porównanie wyników nowego i starego modelu
+    * to nie jest technika zastępująca tylko dodatkowa - możliwość odpytania obydwu modeli i porównania wyników (_reconciliation_) - wywołuj stary, w tle nowy i porównujesz (na prodzie) 
+    * poprawiaj
+    * jak nie ma błędów przepinasz na nowy i w tle porównujesz ze starym
+    * jak są błędy jednak - przepinasz feautre flagę na stare 
+    * poprawiasz  "na spokojnie"
+    * i od początku
+8. Opór: odpytywanie dwóch modeli jest wolniejsze - tak, jest wolniejsze - ale różnica jest zazwyczaj znikoma (kilkaset milisekund do kilkunastu sekund),
+można też odpytać asynchronicznie - a zapewniamy poprawność i ciągłość działania systemu, nie będzie _big bang_
+
+# Sterowanie czasem
+
+1. Rzeczy stają się możliwe po upływie określonego czasu, rzeczy wygasają po danym momencie w czasie 
+2. Czas często wpływa na reguły: domenowe (oddać towar można do 14 dni od zakupu), procesowe (po 5 dniach wysyłamy maila z prośbą o ocenę), koordynacyjne (info o poniedziałkowych dostawach trzeba wysłać do starego systemu), zmienna w obliczeniach
+3. Parametr czasu zmienia wynik równania - często trzeba się pozbyć wywołań typu NOW() - tylko sparametryzować metodę lub wprowadzić zależność do "dostawcy" czasu
+4. Jak wchodzi baza danych to sytuacja jest trudniejsza - można spróbować zaślepić dane albo przenieść ustawianie czasu na wyższą warstwę
+5. Schedulery - ustawia wartość na podstawie jakiegoś czasu (crony) - cięzko testowalne - czasem można się tego pozbyć 
+6. timestamp to nie to samo co data, persystowwanie dat w bazie jest problematyczne (UTC ;)), zegar systemowy może oscylować (jak wymagamy dużej precyzji to może byc to problem), czas letni/zimowy (o boziu, flashbacki z wietnamu)

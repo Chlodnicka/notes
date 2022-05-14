@@ -61,7 +61,7 @@ to często jedyna bezpieczna droga
 8. Opór: odpytywanie dwóch modeli jest wolniejsze - tak, jest wolniejsze - ale różnica jest zazwyczaj znikoma (kilkaset milisekund do kilkunastu sekund),
 można też odpytać asynchronicznie - a zapewniamy poprawność i ciągłość działania systemu, nie będzie _big bang_
 
-# Sterowanie czasem
+## Sterowanie czasem
 
 1. Rzeczy stają się możliwe po upływie określonego czasu, rzeczy wygasają po danym momencie w czasie 
 2. Czas często wpływa na reguły: domenowe (oddać towar można do 14 dni od zakupu), procesowe (po 5 dniach wysyłamy maila z prośbą o ocenę), koordynacyjne (info o poniedziałkowych dostawach trzeba wysłać do starego systemu), zmienna w obliczeniach
@@ -69,3 +69,41 @@ można też odpytać asynchronicznie - a zapewniamy poprawność i ciągłość 
 4. Jak wchodzi baza danych to sytuacja jest trudniejsza - można spróbować zaślepić dane albo przenieść ustawianie czasu na wyższą warstwę
 5. Schedulery - ustawia wartość na podstawie jakiegoś czasu (crony) - cięzko testowalne - czasem można się tego pozbyć 
 6. timestamp to nie to samo co data, persystowwanie dat w bazie jest problematyczne (UTC ;)), zegar systemowy może oscylować (jak wymagamy dużej precyzji to może byc to problem), czas letni/zimowy (o boziu, flashbacki z wietnamu)
+
+## Problem niedopasowanego pod odczyt modelu danych
+
+1. Prawdopodobna geneza problemu - zwiększająca się stopniowo ilość danych
+2. Problem niewydajnych odczytów spowodowany wolumetryką danych i oparciem odmiennych funkcji biznesowaych  stystemu o dokładnie tę samą strukturę danych
+3. Oddzielenie zapisów i odczytów - jak zapewnić spójność?
+* trigger -> łatwo osiągalna spójność, ale musi być ta sama baza, logika przenoszona z aplikacji do bazy danych, wpływa na czas
+* zdarzenie (asynchroniczne) -> zrównoleglenie aktualizacji, nie wpływa znacząco na czas zapisu, różne bazy,
+utrata spójności (eventual consistency), gubienie eventów, sekwencyjność eventów (poison payload), at least once delivery, _transactional inbox_ - to jest trudne
+4. Możliwe rozwiązania np.: cache, jeden większy sql wyciągający dane zamiast kilku-kilkuset pojedynczych, może trzymać w osobnym modelu przeliczone/spłaszczone dane?
+   * ile modeli odczytowych będzie aktualizowanych przy zapisie?
+   * jak duży jest narzut czasowy związany z aktualizacją tych danych?
+   * czy wymagane jest zachowanie silnej spójności pomiędzy modelami (np. czy opóźnienie do 5 min jest akceptowalny)
+   * jakie problemy niesie ze sobą przeniesienie (części) logiki do bazy danych? 
+5. Aktualizacja modelu: wywołanie serwisu, opublikowanie zdarzenia in-memory
+6. Migracja danych (historyczne dane) - trzeba mieć startegię na to
+7. * Przetwarzanie synchroniczne zdarzeń 
+- (odwracanie kontroli itd, ale trzeba liczyć się nadal z tym że poruszamy się w jednym wątku i w obrębie jednej transakcji bazodanowej - wszystko albo nic)
+- przy subskrybowaniu się na takie zdarzenie można zapomnieć o tym 
+8. Ryzyko utraty spójności systemu
+
+### Pytania pomocnicze 
+
+1. Dlaczego istniejąca struktur sprawia problemy wydajnościowe? - co jest problemem
+2. Ile nowych modeli przygotować?
+3. W jaki sposób nowe modele będą wykorzystywane?
+4. Czy planowane jest wprowadzanie nowych widoków?
+5. Jaka strategia zapewnienia spójności danych jest właściwa dla poszczególnych modeli?
+6. Jakie zagrożenia niesie wykorzystanie nieświeżych danych
+7. W jaki sposób nowe modlele powinny zostać zasilone przed ich uruchomieniem?
+8. Czy potrzebne będzie wyłączenie systeu na czas migracji?
+9. Czy możliwe jest wykoananie części czynności wcześniej?
+10. Czy nowe rozwiązanie będzie mogło funkcjonować częściowo za Featur Flag?
+11. Czy i w jaki sposób będziemy weryfikować poprawność nowego modelu do starego?
+
+## Problem niedopasowanego paradygmatu bazy danych
+
+

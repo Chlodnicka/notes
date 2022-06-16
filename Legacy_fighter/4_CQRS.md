@@ -106,4 +106,16 @@ utrata spójności (eventual consistency), gubienie eventów, sekwencyjność ev
 
 ## Problem niedopasowanego paradygmatu bazy danych
 
+1. Np. rozwiązujemy problem grafowy za pomocą relacyjnego modelu. Przy większej ilości danych zaczyna nam to bruździć
+   * Percona - struktury drzewiaste 
+2. Ukryte koszty (bezpieczeństwo danych, devopsowe rzeczy, rozpropagowanie wiedzy)
+
+## Pytania
+
+1. Jaka jest natura problemu? Jakie bazy danych obsługują ten paradygmat? Jaka struktura modelu odczytowego będzie spoko? Czy znane są nowe wymagania, które mogą wpłynąć na model?
+2. Jak będziemy synchronizować dane? 
+3. Czy asynchroniczność stanowi jakiś problem? _poison payload_
+4. Jak zsynchronizować nowy model "od zera" po awarii?
+5. Czy posiadamy umiejętności i kompetencje przywracania takiego systemu? (devops, dane itd)
+6. **wspólny mianownik problemu** 
 

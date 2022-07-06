@@ -83,3 +83,65 @@ tag - znacznik najbliższego taga
 numberOfCommits - liczba commitów do najbliższego taga
 hash - hasz aktualnego commita
 ```
+## Git zdalny
+
+1. `git clone` - tworzenie lokalnej kopii zdalnego repo
+2. Gałęzie zdalne - odzwierciedlają stan zdalnych repo (od czasu ostatniej komunikacji)
+3. Jak przepinamy się na gałąź zdalną, wchodzimy w tryp "odłączonego HEADa" - nie da się pracować bezpośrednio na 
+zdalnych gałęziach, można je tylko zsynchronizować ze zdalnym, ze zdalnego z lokalnym
+4. Zdalne gałęzie mają nazwy 2-członowe
+```
+<remote_name>/<branch_name> np. defaultowo origin/main
+```
+5. Fetch - pobieranie danych ze zdalnego repo
+```
+git fetch
+```
+Pobiera commity, które są w zdalnym ale nie w lokalnym. Aktualizuje miejsce, które wskazuje na zdalne -> origin/main
+Nic nie robi ze stanem lokalnym. Lokalna kopia `origin/main` zostanie zaktualizowany ale lokalny `main` już nie.
+```
+git fetch origin foo - pobierz commity ze zdalnego foo i zrzuć je na lokalną origin/foo. Z lokalną foo treba ręcznie scalić
+git fetch origin <źródło (zdalne)>:<cel (lokalny)>
+git fech origin foo~1:bar
+* jak cel (bar) nie istnieje to go tworzy
+* źródło - git pozwala na ustawienie tego parametru na "nic"
+git fetch origin :bugfix - tworzy gałąź bugfix lokalnie
+```
+`Fetch` bez argumentów ściąga wszystko.
+Zmiany pobrane ze zdalnego repo można dołączyć do loklanych branchy cherry-pickiem, rebasem czy mergem
+```
+git cherry-pick origin/main
+git rebase origin/main
+git merge origin/main
+```
+6. Pobieranie (`fetch`) i łączenie (`merge`) są tak powszechne, że jest osobne polecenie: `git pull`
+```
+git pull - merguje
+git pull --rebase - rebasuje
+```
+Za rebase stoi to, że drzewo wygląda bardzo czysto (1 linia). Przeciw - rebase zmienia (pozornie) historię drzewa
+commitów. Np C1 można przebazować za C3, co wygląda tak, jakby C3 zostało wykonane wcześniej niż C1. 
+Merge zachowuje kolejność ale dokłada złożoności.
+7. Gałęzie śledzące (`origin`): podczas pull comity są pobierane do `origin/main` a następnie za pomocą `merge` scalane z lokalnym main
+8. Podczas `push` praca z main wypychana jest do zdalnej `main` (do której wskaźnik reprezentuje `origin/main`) - remote tracking
+9. Przy clone te zależności tworzą się automatycznie. Git tworzy zdalną gałąź dla każdej gałęzi ze zdalnego repo, potem zazwyczaj tylko jedną gałąź lokalną (main)
+Można zmienić to domyślne zachowanie i ustawić śledzenie gałęzi dowolnie
+```
+git checkout -b notMainBranch origin/main
+lub
+git branch -u origin/main foo 
+lub gdy jesteśmy na danej gałęzi
+git branch -u irign/main 
+```
+10. `git push` - przesyła zmiany do zdalnego repo. Push bez argumentów pushuje tam gdzie ustawiony jest push default.
+Odpowiednik gałęzi w zdalnym repo to `remote`
+```
+git push <remote - gdzie do remote> <place - skąd>
+np.
+git push origin main 
+git push (domyślnie automatyczna konfiguracja - do remota z brancha na którym jesteśmy)
+git push origin foo^:main <źródło (lokalne)>:<cel (zdalny)> (chemy wypchnąć lokalny foo do zdalnego bar
+* źródło - git pozwala na ustawienie tego parametru na "nic"
+git push origin :side - usuwa gałąź :side ze zdalnego repo
+```
+11. Lokalizacja w gicie: można posługiwać sięnazwą brancha, hash commita, HEAD~1

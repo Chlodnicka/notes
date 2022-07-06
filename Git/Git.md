@@ -118,6 +118,8 @@ git merge origin/main
 ```
 git pull - merguje
 git pull --rebase - rebasuje
+git pull origin foo == git ferch origin foo;git merge origin/foo
+git pull origin bar~1:bugfix == git fetch origin:bar~1:bugfix, git merge bugfix (do aktualnej pozycji)
 ```
 Za rebase stoi to, że drzewo wygląda bardzo czysto (1 linia). Przeciw - rebase zmienia (pozornie) historię drzewa
 commitów. Np C1 można przebazować za C3, co wygląda tak, jakby C3 zostało wykonane wcześniej niż C1. 

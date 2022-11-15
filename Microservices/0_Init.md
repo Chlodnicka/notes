@@ -15,12 +15,25 @@ Plan:
    * Definition - https://martinfowler.com/articles/microservices.html
    * Trade-Offs - https://martinfowler.com/articles/microservice-trade-offs.html#boundaries
    * When to do? Monolith first? vs Dont start with monolith 
-   * Prerequisites & first law of distributed objects
+   * Prerequisites (Rapid provisioning, monitoring, rapid app deployment, devops culture) & first law of distributed objects
    * Testing
    * Breaking monolith (https://martinfowler.com/tags/legacy%20rehab.html)
    * Frontend
    * InfrastructureAsCode, DevOps
-3. Patterns: https://microservices.io/patterns/index.html
+3. When To Use Microservices - https://www.youtube.com/watch?v=GBTdnfD6s5Q 
+   * activity/tech over outcome/benefit
+   * monolith also can be distributed
+   * try one, not all at once
+   * isolation of processing data, zero downtime, high degree of autonomy (deploys take to long, we have a queue of people wanting to deploy sth a day before), reducing risks of deployment, enabling canary releases
+   * information hiding
+   * "there is nothing more complicated than distributed system"
+   * monolith - we find ways to violate isolation, microservices prevent that (in very crooked way but still). nothing above class to defend modularity (in code by default)
+   * handling data - relation between data is sometimes more obious than in code and better express intent and domain, after separation of code we need to acknowledge what kind of data it uses from old db
+   * handling data - maybe one db and multiple schemas? 
+   * handling data - consistency bye bye - but normally we do not need transaction through whole db, we have specific processes
+   * people need to want change, Kotters 8 step process for making organizational change https://whatfix.com/blog/kotters-8-step-change-model/
+   * "governance through tooling"
+4. Patterns: https://microservices.io/patterns/index.html
     * Application architecture patterns
         * Monolithic architecture - https://microservices.io/patterns/monolithic.html
         * Microservice architecture - https://microservices.io/patterns/microservices.html

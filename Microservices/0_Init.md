@@ -4,6 +4,8 @@
 
 1. https://martinfowler.com/microservices/
 2. https://microservices.io/index.html
+3. http://chrisrichardson.net/post/microservices/general/2019/02/16/whats-a-service-part-1.html
+4. https://microservices.io/microservices/news/2018/02/20/no-such-thing-as-a-microservice.html
 
 Plan:
 
@@ -51,12 +53,14 @@ Plan:
     * Security
     * Observability
     * UI patterns
-4. Refactoring
+   ![Microservices patterns diagram](microservices_patterns.jpeg)
+5. Refactoring
     * https://microservices.io/refactoring/index.html
-5. Microservices adoption anti-patterns: 
+6. Microservices adoption anti-patterns: 
     * http://chrisrichardson.net/post/antipatterns/2019/01/28/melbourne-microservices.html
-    * https://microservices.io/microservices/antipatterns/-/the/series/2019/06/18/microservices-adoption-antipatterns.html
-
+    * https://microservices.io/microservices/antipatterns/-/the/series/2019/06/18/microservices-adoption-antipatterns.html\
+7. Scale cube - https://microservices.io/articles/scalecube.html
+8. Testing strategies - https://martinfowler.com/articles/microservice-testing/
    
 1.2
 When worth having more than one deployment unit in application?
